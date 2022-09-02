@@ -61,7 +61,7 @@ void GS_or_Jacobi(int max_iter , VD RHS, VD &Solution , mpiInfo &myMPI , int GSo
 	// (1) Parallel communication on PE Boundaries
 	// ----------------------------------------------
 	
-	myMPI.ExchangeBoundaryInfo(Solution,b);
+	myMPI.ExchangeBoundaryInfo(Solution, b);
 
 	// ----------------------------------------------
 	// (2) Convergence

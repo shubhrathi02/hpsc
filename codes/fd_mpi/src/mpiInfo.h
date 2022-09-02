@@ -80,38 +80,38 @@ class mpiInfo
     nPEy = _nPEy;
     
     if (nPEx*nPEy != numPE)
-      {
-    	if ( myPE == 0 ) cout << "Fatal Error:  Number of PEs in x-y directions do not add up to numPE" << endl;
-    	MPI_Barrier(MPI_COMM_WORLD);
-    	MPI_Finalize();
-    	exit(0);
-      }
+    {
+      if ( myPE == 0 ) cout << "Fatal Error:  Number of PEs in x-y directions do not add up to numPE" << endl;
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Finalize();
+      exit(0);
+    }
     
     // Get the i-j location of this processor, given its number.  See figure above:
     
     jPE = int(myPE/nPEx);
-    iPE = myPE - jPE*nPEx;
+    iPE = myPE - jPE * nPEx;
 
     // Set neighbor values
 
     nei_n = nei_s = nei_e = nei_w = -1;
 
     if ( iPE > 0      )
-      {
-	nei_w = myPE - 1    ;
-      }
+    {
+	    nei_w = myPE - 1    ;
+    }
     if ( jPE > 0      )
-      {
-	// TO-DO
-      }
+    {
+	    nei_s = myPE - nPEx; // TO-DO
+    }
     if ( iPE < nPEx-1 )
-      {
-	// TO-DO
-      }
+    {
+	    nei_e = myPE + 1; // TO-DO
+    }
     if ( jPE < nPEy-1 )
-      {
-	// TO-DO
-      }
+    {
+	    nei_n = myPE + nPEx; // TO-DO
+    }
 
     countx = nRealx + 2;
     county = nRealy + 2;
@@ -144,19 +144,23 @@ class mpiInfo
 	// (1) Parallel communication on PE Boundaries:   ** See fd.h for tLOOP and sLOOP macros **
 	// ----------------------------------------------
 
-	// (1.1) Record values on PE physical boundaries.  These align with the adjacent PE's GHOST NODES, not physical nodes.
+	// (1.1) Record values on PE physical boundaries ( 1 layer in).  These align with the adjacent PE's GHOST NODES, not physical nodes.
 	
 	tLOOP phiL[t] = Solution[ pid(    2 ,    t ) ];      
 	tLOOP phiR[t] = Solution[ pid( nRealx-1 ,    t ) ];
-	sLOOP phiT[s] = Solution[ /* TO-DO in LAB */ ];
-	sLOOP phiB[s] = Solution[ /* TO-DO in LAB */ ];
+
+	//sLOOP phiT[s] = Solution[ /* TO-DO in LAB */ ];
+  sLOOP phiT[s] = Solution[ pid( s ,    nRealy-1 ) ];
+
+	//sLOOP phiB[s] = Solution[ /* TO-DO in LAB */ ];
+  sLOOP phiB[s] = Solution[ pid( s ,    2 ) ];
 	
 	// (1.2) Put them into communication arrays
 	
 	sLOOP phiSend_n[s] = phiT[s];
 	sLOOP phiSend_s[s] = phiB[s];
-	tLOOP phiSend_e[t] = /* TO-Do in LAB */;
-	tLOOP phiSend_w[t] = /* TO-Do in LAB */;
+	tLOOP phiSend_e[t] = phiR[t]; /* TO-Do in LAB */;
+	tLOOP phiSend_w[t] = phiL[t]; /* TO-Do in LAB */;
 
 	// (1.3) Send them to neighboring PEs
 

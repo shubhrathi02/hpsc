@@ -94,7 +94,7 @@ class LaplacianOnGrid
 public:
 
   double x0, x1, y0, y1;
-  VD x,y;
+  VD x, y;
   int nRealx    , nRealy   , nField;
   double dx, dy;
   VDD A ;    VD  phi ;  VD  b ;
@@ -125,12 +125,14 @@ public:
     x.resize(nField+1); y.resize(nField+1);
 		       
     for ( int i = 1 ; i <= nRealx ; ++i )
+    {
       for ( int j = 1 ; j <= nRealy ; ++j )
-	{
-	  int p = pid(i,j);
-	  x[p] = x0 + (i-1)*dx;
-	  y[p] = y0 + (j-1)*dy;
-	}
+      {
+        int p = pid(i, j);
+        x[p] = x0 + (i-1)*dx;
+        y[p] = y0 + (j-1)*dy;
+      }
+    }
 
     A.resize(nField+1 ); rLOOP A[r].resize(nField+1);
     b.resize(nField+1 );
@@ -158,12 +160,12 @@ public:
     iLOOP      // A*phi = b has extra rows and columns to accommodate nodes outside the physical domain.
       jLOOP    // That is why we can loop all the from 1 to nRealx and 1 to nRealy.
       {
-	int p = pid(i,j);
-	A[ p ][ pid( i  , j  ) ] = -2./dx2 - 2./dy2;
-	A[ p ][ pid( i+1, j  ) ] =  1./dx2;
-	A[ p ][ pid( i-1, j  ) ] =  1./dx2;
-	A[ p ][ pid( i  , j+1) ] =  1./dy2;
-	A[ p ][ pid( i  , j-1) ] =  1./dy2;
+        int p = pid(i,j);
+        A[ p ][ pid( i  , j  ) ] = -2./dx2 - 2./dy2;
+        A[ p ][ pid( i+1, j  ) ] =  1./dx2;
+        A[ p ][ pid( i-1, j  ) ] =  1./dx2;
+        A[ p ][ pid( i  , j+1) ] =  1./dy2;
+        A[ p ][ pid( i  , j-1) ] =  1./dy2;
       }
 
     // Populate arrays, one for each side, containing the Dirichlet BCs
