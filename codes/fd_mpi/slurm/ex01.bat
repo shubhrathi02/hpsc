@@ -44,7 +44,7 @@ echo "|| Begin Execution of fd in slurm batch script."
 echo "||"
 echo "=="
 
-mpirun -n 4 ./fd -nPEx 2 -nPEy 2 -nCellx 5 -nCelly 5 > tty.out
+mpirun -n 4 ./../src/fd -nPEx 2 -nPEy 2 -nCellx 5 -nCelly 5 > tty.out
 
 echo "=="
 echo "||"

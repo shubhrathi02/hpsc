@@ -193,8 +193,8 @@ class mpiInfo
 	
   if ( nei_n >= 0 ) sLOOP b[ pid ( s, nRealy+1 ) ] = phiT[s]/* TO-DO in LAB */ ;
   if ( nei_s >= 0 ) sLOOP b[ pid ( s, nRealy+1 ) ] = phiB[s]/* TO-DO in LAB */ ;
-  if ( nei_e >= 0 ) sLOOP b[ pid ( t, nRealx+1 ) ] = phiR[t]/* TO-DO in LAB */ ;
-  if ( nei_w >= 0 ) sLOOP b[ pid ( t, nRealx+1 ) ] = phiL[t]/* TO-DO in LAB */ ;
+  if ( nei_e >= 0 ) tLOOP b[ pid ( t, nRealx+1 ) ] = phiR[t]/* TO-DO in LAB */ ;
+  if ( nei_w >= 0 ) tLOOP b[ pid ( t, nRealx+1 ) ] = phiL[t]/* TO-DO in LAB */ ;
 	/* TO-DO in LAB (other three sides: e,w,s) */
   }
   
