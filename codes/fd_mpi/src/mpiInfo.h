@@ -172,9 +172,9 @@ class mpiInfo
 	// (1.4) Receive values from neighobring PEs' physical boundaries.
 	
 	if ( nei_n >= 0 ) { err = MPI_Irecv( phiRecv_n, nRealx + 2, MPI_DOUBLE, nei_n, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }   
-	if ( nei_s >= 0 ) { err = MPI_Irecv( phiRecv_s, nRealx + 2, MPI_DOUBLE, nei_n, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
-	if ( nei_e >= 0 ) { err = MPI_Irecv( phiRecv_e, nRealy + 2, MPI_DOUBLE, nei_n, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
-	if ( nei_w >= 0 ) { err = MPI_Irecv( phiRecv_w, nRealy + 2, MPI_DOUBLE, nei_n, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
+	if ( nei_s >= 0 ) { err = MPI_Irecv( phiRecv_s, nRealx + 2, MPI_DOUBLE, nei_s, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
+	if ( nei_e >= 0 ) { err = MPI_Irecv( phiRecv_e, nRealy + 2, MPI_DOUBLE, nei_e, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
+	if ( nei_w >= 0 ) { err = MPI_Irecv( phiRecv_w, nRealy + 2, MPI_DOUBLE, nei_w, tag, MPI_COMM_WORLD, &request /* TO-DO in LAB */   );   MPI_Wait(&request,&status); }
 	
 	// (1.5) If new information was received, store it in the candy-coating values
 
@@ -184,17 +184,17 @@ class mpiInfo
 	if ( nei_w >= 0 ) tLOOP { phiL[t] = phiRecv_w[t]/* TO-DO in LAB */; }
 	
   if ( nei_n >= 0 ) sLOOP Solution[ pid( s, nRealy+1) ] = phiT[s]/* TO-DO in LAB */; 
-  if ( nei_s >= 0 ) sLOOP Solution[ pid( s, nRealy+1) ] = phiB[s]/* TO-DO in LAB */; 
-  if ( nei_e >= 0 ) tLOOP Solution[ pid( t, nRealx+1) ] = phiR[t]/* TO-DO in LAB */; 
-  if ( nei_w >= 0 ) tLOOP Solution[ pid( t, nRealx+1) ] = phiL[t]/* TO-DO in LAB */; 
+  if ( nei_s >= 0 ) sLOOP Solution[ pid( s, 0) ] = phiB[s]/* TO-DO in LAB */; 
+  if ( nei_e >= 0 ) tLOOP Solution[ pid( nRealx+1, t) ] = phiR[t]/* TO-DO in LAB */; 
+  if ( nei_w >= 0 ) tLOOP Solution[ pid( 0, t) ] = phiL[t]/* TO-DO in LAB */; 
 	/* TO-DO in LAB (other three sides: e,w,s) */
 	
 	// (1.2) Apply exchanged information as BCs -- Boundary Conditions
 	
   if ( nei_n >= 0 ) sLOOP b[ pid ( s, nRealy+1 ) ] = phiT[s]/* TO-DO in LAB */ ;
-  if ( nei_s >= 0 ) sLOOP b[ pid ( s, nRealy+1 ) ] = phiB[s]/* TO-DO in LAB */ ;
-  if ( nei_e >= 0 ) tLOOP b[ pid ( t, nRealx+1 ) ] = phiR[t]/* TO-DO in LAB */ ;
-  if ( nei_w >= 0 ) tLOOP b[ pid ( t, nRealx+1 ) ] = phiL[t]/* TO-DO in LAB */ ;
+  if ( nei_s >= 0 ) sLOOP b[ pid ( s, 0 ) ] = phiB[s]/* TO-DO in LAB */ ;
+  if ( nei_e >= 0 ) tLOOP b[ pid ( nRealx+1, t ) ] = phiR[t]/* TO-DO in LAB */ ;
+  if ( nei_w >= 0 ) tLOOP b[ pid ( 0, t ) ] = phiL[t]/* TO-DO in LAB */ ;
 	/* TO-DO in LAB (other three sides: e,w,s) */
   }
   

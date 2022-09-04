@@ -197,12 +197,12 @@ public:
     int count = 0;
     for ( int i = iMin ; i <= iMax ; ++i )
       for ( int j = jMin ; j <= jMax ; ++j )
-	{
-	  int p = pid(i,j);
-	  cLOOP A[p][c] = 0.;
-	  A[ p ] [ p ] = 1. ;  b[ p ] =  phiValues[count];
-	  ++count;
-	}
+      {
+        int p = pid(i,j);
+        cLOOP A[p][c] = 0.;
+        A[ p ] [ p ] = 1. ;  b[ p ] =  phiValues[count];
+        ++count;
+      }
 
     return;
   }
