@@ -76,12 +76,12 @@ class mpiInfo
     nPEy = _nPEy;
     
     if (nPEx*nPEy != numPE)
-      {
-    	if ( myPE == 0 ) cout << "Fatal Error:  Number of PEs in x-y directions do not add up to numPE" << endl;
-    	MPI_Barrier(MPI_COMM_WORLD);
-    	MPI_Finalize();
-    	exit(0);
-      }
+    {
+      if ( myPE == 0 ) cout << "Fatal Error:  Number of PEs in x-y directions do not add up to numPE" << endl;
+      MPI_Barrier(MPI_COMM_WORLD);
+      MPI_Finalize();
+      exit(0);
+    }
     
     // Get the i-j location of this processor, given its number.  See figure above:
     
@@ -94,27 +94,27 @@ class mpiInfo
 
     if ( iPE > 0      )
       {
-	nei_w = myPE - 1    ;
+	      nei_w = myPE - 1    ;
       }
     if ( jPE > 0      )
       {
-	nei_s = myPE - nPEx ;  
+	      nei_s = myPE - nPEx ;  
       }
     if ( iPE < nPEx-1 )
       {
-	nei_e = myPE + 1    ; 
+	      nei_e = myPE + 1    ; 
       }
     if ( jPE < nPEy-1 )
       {
-	nei_n = myPE + nPEx ;  
+	      nei_n = myPE + nPEx ;  
       }
 
     nei_nw = nei_sw = nei_ne = nei_se = -1;
     
     if ( iPE > 0      && jPE > 0      )  nei_sw = myPE - 1 - nPEx  ;
-    if ( iPE < nPEx-1 && jPE > 0      )  nei_se = /* TO-DO */ ;
-    if ( iPE > 0      && jPE < nPEy-1 )  nei_nw = /* TO-DO */ ;
-    if ( iPE > nPEx-1 && jPE < nPEy-1 )  nei_ne = /* TO-DO */ ;
+    if ( iPE < nPEx-1 && jPE > 0      )  nei_se = myPE + 1 - nPEx/* TO-DO */ ;
+    if ( iPE > 0      && jPE < nPEy-1 )  nei_nw = myPE - 1 + nPEx/* TO-DO */ ;
+    if ( iPE < nPEx-1 && jPE < nPEy-1 )  nei_ne = myPE + 1 + nPEx/* TO-DO */ ;
 
     // Acquire memory for the communication between adjacent processors:
     countx = nRealx + 2;
@@ -157,15 +157,15 @@ class mpiInfo
 
     int numToSend = ptcl_send_list.size();      int maxToSend;
 
-    MPI_Iallreduce( /* TO-DO */ );  MPI_Wait(&request,&status);  
+    MPI_Iallreduce(&numToSend, &maxToSend, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD, &request);  MPI_Wait(&request,&status);  
 
     // (2) Allocate contributions to the upcoming Gather operation.  Here, "C" for "Contribution" to be Gathered
 
-    int    *Cptcl_PE;  Cptcl_PE = new int    [ /* TO-DO */ ];  // Particles' destination PEs 
-    double *Cptcl_x ;  Cptcl_x  = new double [ /* TO-DO */ ];
-    double *Cptcl_y ;  Cptcl_y  = new double [ /* TO-DO */ ];
-    double *Cptcl_vx;  Cptcl_vx = new double [ /* TO-DO */ ];
-    double *Cptcl_vy;  Cptcl_vy = new double [ /* TO-DO */ ];
+    int    *Cptcl_PE;  Cptcl_PE = new int    [ maxToSend/* TO-DO */ ];  // Particles' destination PEs 
+    double *Cptcl_x ;  Cptcl_x  = new double [ maxToSend/* TO-DO */ ];
+    double *Cptcl_y ;  Cptcl_y  = new double [ maxToSend/* TO-DO */ ];
+    double *Cptcl_vx;  Cptcl_vx = new double [ maxToSend/* TO-DO */ ];
+    double *Cptcl_vy;  Cptcl_vy = new double [ maxToSend/* TO-DO */ ];
 
     // (3) Populate contributions on all processors for the upcoming Gather operation
 
@@ -175,14 +175,14 @@ class mpiInfo
     // (4) Populate with all the particles on this PE.  Note that some/most processors will have left-over space in the C* arrays.
     
     for ( int i = 0 ; i < ptcl_send_list.size() ; ++i )
-      {
-	int id      = ptcl_send_list[ /* TO-DO */ ];
-	Cptcl_PE[i] = ptcl_send_PE  [ /* TO-DO */ ];
-	Cptcl_x [i] = PTCL.x        [ /* TO-DO */ ];
-	Cptcl_y [i] = PTCL.y        [ /* TO-DO */ ];
-	Cptcl_vx[i] = PTCL.vx       [ /* TO-DO */ ];
-	Cptcl_vy[i] = PTCL.vy       [ /* TO-DO */ ];
-      }
+    {
+      int id      = ptcl_send_list[ i/* TO-DO */ ];
+      Cptcl_PE[i] = ptcl_send_PE  [ i/* TO-DO */ ];
+      Cptcl_x [i] = PTCL.x        [ i/* TO-DO */ ];
+      Cptcl_y [i] = PTCL.y        [ i/* TO-DO */ ];
+      Cptcl_vx[i] = PTCL.vx       [ i/* TO-DO */ ];
+      Cptcl_vy[i] = PTCL.vy       [ i/* TO-DO */ ];
+    }
 
     // (5) Allocate and initialize the arrays for upcoming Gather operation to PE0.  The sizeOfGather takes
     //     into account the number of processors, like this figure:
@@ -195,13 +195,13 @@ class mpiInfo
     //             PE0               PE1                PE2               PE3           
 
 
-    int sizeOfGather = /* TO-DO */;
+    int sizeOfGather = maxToSend * numPE /* TO-DO */;
     
-    int    *Gptcl_PE;  Gptcl_PE = new int    [ /* TO-DO */ ];
-    double *Gptcl_x ;  Gptcl_x  = new double [ /* TO-DO */ ];
-    double *Gptcl_y ;  Gptcl_y  = new double [ /* TO-DO */ ];
-    double *Gptcl_vx;  Gptcl_vx = new double [ /* TO-DO */ ];
-    double *Gptcl_vy;  Gptcl_vy = new double [ /* TO-DO */ ];
+    int    *Gptcl_PE;  Gptcl_PE = new int    [ sizeOfGather/* TO-DO */ ];
+    double *Gptcl_x ;  Gptcl_x  = new double [ sizeOfGather/* TO-DO */ ];
+    double *Gptcl_y ;  Gptcl_y  = new double [ sizeOfGather/* TO-DO */ ];
+    double *Gptcl_vx;  Gptcl_vx = new double [ sizeOfGather/* TO-DO */ ];
+    double *Gptcl_vy;  Gptcl_vy = new double [ sizeOfGather/* TO-DO */ ];
     
     for ( int i = 0 ; i < sizeOfGather ; ++i ) { Gptcl_PE[i] = -1; Gptcl_x [i] = 0.; Gptcl_y [i] = 0.; Gptcl_vx[i] = 0.; Gptcl_vy[i] = 0.;  }
 
@@ -211,35 +211,37 @@ class mpiInfo
     
     MPI_Barrier(MPI_COMM_WORLD);
     
-    MPI_Iallgather( /* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( /* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( /* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( /* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( /* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    MPI_Iallgather( Cptcl_PE, maxToSend, MPI_INT, Gptcl_PE, sizeOfGather, MPI_INT, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    MPI_Iallgather( Cptcl_x, maxToSend, MPI_DOUBLE, Gptcl_x, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    MPI_Iallgather( Cptcl_y, maxToSend, MPI_DOUBLE, Gptcl_y, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    MPI_Iallgather( Cptcl_vx, maxToSend, MPI_DOUBLE, Gptcl_vx, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    MPI_Iallgather( Cptcl_vy, maxToSend, MPI_DOUBLE, Gptcl_vy, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
 
     MPI_Barrier(MPI_COMM_WORLD);
 
     // (7) Put in vector form so they can be added to PTCL.  These arrays are 1-based.
 
-    int Np = 0;  for ( int i = 0 ; i < /* TO-DO */ ; ++i ) if ( Gptcl_PE[i] == myPE ) ++Np;   
+    int Np = 0;  for ( int i = 0 ; i < sizeOfGather/* TO-DO */ ; ++i ) if ( Gptcl_PE[i] == myPE ) ++Np;   
     
-    VD  std_add_x  ;  std_add_x.resize  ( Np+1 );
-    VD  std_add_y  ;  std_add_y.resize  ( Np+1 );
-    VD  std_add_vx ;  std_add_vx.resize ( Np+1 );
-    VD  std_add_vy ;  std_add_vy.resize ( Np+1 );
+    VD  std_add_x  ;  std_add_x.resize  ( Np + 1 );
+    VD  std_add_y  ;  std_add_y.resize  ( Np + 1 );
+    VD  std_add_vx ;  std_add_vx.resize ( Np + 1 );
+    VD  std_add_vy ;  std_add_vy.resize ( Np + 1 );
 
     int count = 1;
     for ( int i = 0 ; i < sizeOfGather ; ++i )
-      if ( Gptcl_PE[i] == /* TO-DO */ ) 
-	{
-	  std_add_x [ /* TO-DO */ ] = Gptcl_x[i]; 
-	  std_add_y [ /* TO-DO */ ] = Gptcl_y [i];
-	  std_add_vx[ /* TO-DO */ ] = Gptcl_vx[i];
-	  std_add_vy[ /* TO-DO */ ] = Gptcl_vy[i];
-	  ++count;                                
-	}
+    {
+      if ( Gptcl_PE[i] == myPE/* TO-DO */ ) 
+      {
+        std_add_x [ count/* TO-DO */ ] = Gptcl_x[i]; 
+        std_add_y [ count/* TO-DO */ ] = Gptcl_y [i];
+        std_add_vx[ count/* TO-DO */ ] = Gptcl_vx[i];
+        std_add_vy[ count/* TO-DO */ ] = Gptcl_vy[i];
+        ++count;                                
+      }
+    }
 
-    PTCL.add( /* TO-DO */ );
+    PTCL.add( std_add_x, std_add_y, std_add_vx, std_add_vy/* TO-DO */ );
 
     // (8) Free up memory
 

@@ -3,7 +3,7 @@
 # module load impi 
  
 
-rm *.plt
+#rm *.plt
 
 
 
@@ -17,7 +17,7 @@ rm *.plt
 # mpirun -n 3 ./fp -nPEx 3 -nPEy 1 -nCellx 5 -nCelly 5 -flux 3 -tEnd .091 -dt .1 > tmp
 
 
- mpirun --oversubscribe -n 4 ./fp -nPEx 2 -nPEy 2 -nCellx 5  -nCelly 5 -flux 10 -tEnd 2 -dt .1
+mpirun -n 4 ./fp -nPEx 2 -nPEy 2 -nCellx 5  -nCelly 5 -flux 10 -tEnd 2 -dt .1
 
 
 # mpirun -n 1 ./fp -nPEx 1 -nPEy 1 -nCellx 5  -nCelly 5 -flux 10 -tEnd 10 -dt .1 
@@ -37,20 +37,20 @@ rm *.plt
 # GNUPLOT FILES:
 #--------------------------------------------------------------------------------------------------------
 
-./writePlotCmd.py
+./writePlotCmd_py3.py
 
 
 #--------------------------------------------------------------------------------------------------------
 # DEBUG FILES:
 #--------------------------------------------------------------------------------------------------------
 
-rm *.sed
-rm 0 1 2 3
+#rm *.sed
+#rm 0 1 2 3
 
-grep 'myPE: 0' tmp > 0.sed  ; sed s/'myPE: 0'/''/g 0.sed > 0
-grep 'myPE: 1' tmp > 1.sed  ; sed s/'myPE: 1'/''/g 1.sed > 1
-grep 'myPE: 2' tmp > 2.sed  ; sed s/'myPE: 2'/''/g 2.sed > 2
-grep 'myPE: 3' tmp > 3.sed  ; sed s/'myPE: 3'/''/g 3.sed > 3
+#grep 'myPE: 0' tmp > 0.sed  ; sed s/'myPE: 0'/''/g 0.sed > 0
+#grep 'myPE: 1' tmp > 1.sed  ; sed s/'myPE: 1'/''/g 1.sed > 1
+#grep 'myPE: 2' tmp > 2.sed  ; sed s/'myPE: 2'/''/g 2.sed > 2
+#grep 'myPE: 3' tmp > 3.sed  ; sed s/'myPE: 3'/''/g 3.sed > 3
 
 
 
