@@ -4,7 +4,7 @@
 # |
 # | This is a batch script for running a MPI parallel job on Summit
 # |
-# | (o) To submit this job, enter:  sbatch --export=CODE='/home/scru5660/HPSC/codes/fd_mpi/src' ex_01.bat 
+# | (o) To submit this job, enter:  sbatch --export=CODE='/home/shra9449/summit/hpsclabs/codes/fp_mpi/src' ex_01.bat 
 # |
 # | (o) To check the status of this job, enter: squeue -u <username>
 # |

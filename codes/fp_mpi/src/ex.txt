@@ -1,0 +1,294 @@
+MPI startup(): shm:tmi fabric is unknown or has been removed from the product, please use ofi or shm:ofi instead
+
+---------------------------------------------
+
+ F R E E   P A R T I C L E                   
+ D E M O   C O D E                           
+
+ Running on 4 processors 
+
+---------------------------------------------
+
+
+Input Summary: 
+--------------------------- 
+No. PE   in  x-direction: 2
+             y-direction: 2
+No. Cells in x-direction: 5
+             y-direction: 5
+Flux density            : 10
+End Time                : 2
+Time Step               : 0.1
+
+
+myPE: 
+
+myPE: 1 Time = myPE: 2 Time = 3 Time = 0
+0
+0
+mypE: 1 01
+
+myPE: 0 Time = 0mypE: 2 01
+mypE: 3 01
+
+mypE: 0 01
+mypE: 1 02
+mypE: 3 02
+mypE: 0 02
+mypE: 2 02
+mypE: 0 1
+mypE: 1 1
+mypE: 0 2
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+mypE: 1 2
+mypE: 1 3
+mypE: 1 4
+mypE: 2 1
+mypE: 3 1
+mypE: 3 2
+mypE: 1 5
+mypE: 1 6
+mypE: 2 2
+mypE: 2 3
+mypE: 2 4
+mypE: 2 5
+mypE: 2 6
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+
+myPE: 0 Time = 0.1
+mypE: 0 01
+
+myPE: 1 Time = 0.1
+mypE: 1 01
+
+myPE: 3 Time = 0.1
+mypE: 3 01
+
+myPE: 2 Time = 0.1
+mypE: 2 01
+mypE: 3 02
+mypE: 1 02
+mypE: 2 02
+mypE: 0 02
+mypE: 0 1
+mypE: 1 1
+mypE: 1 2
+mypE: 1 3
+mypE: 2 1
+mypE: 2 2
+mypE: 2 3
+mypE: 2 4
+mypE: 2 5
+mypE: 0 2
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+mypE: 1 4
+mypE: 1 5
+mypE: 1 6
+mypE: 2 6
+mypE: 3 1
+mypE: 3 2
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+
+myPE: 1 Time = 0.2
+mypE: 1 01
+
+myPE: 0 Time = 0.2
+mypE: 0 01
+
+myPE: 2 Time = 0.2
+mypE: 2 01
+
+myPE: 3 Time = 0.2
+mypE: 3 01
+mypE: 0 02
+mypE: 2 02
+mypE: 1 02
+mypE: 3 02
+mypE: 3 1
+mypE: 0 1
+mypE: 0 2
+mypE: 1 1
+mypE: 1 2
+mypE: 1 3
+mypE: 1 4
+mypE: 1 5
+mypE: 1 6
+mypE: 2 1
+mypE: 2 2
+mypE: 2 3
+mypE: 2 4
+mypE: 2 5
+mypE: 2 6
+mypE: 3 2
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+
+myPE: 3 Time = 0.3
+mypE: 3 01
+
+myPE: 1 Time = 0.3
+mypE: 1 01
+
+myPE: 2 Time = 0.3
+mypE: 2 01
+
+myPE: 0 Time = 0.3
+mypE: 0 01
+mypE: 0 02
+mypE: 1 02
+mypE: 1 1
+mypE: 1 2
+mypE: 2 02
+mypE: 2 1
+mypE: 2 2
+mypE: 2 3
+mypE: 2 4
+mypE: 3 02
+mypE: 3 1
+mypE: 3 2
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+mypE: 0 1
+mypE: 0 2
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+mypE: 1 3
+mypE: 1 4
+mypE: 1 5
+mypE: 1 6
+mypE: 2 5
+mypE: 2 6
+
+myPE: 1 Time = 0.4
+mypE: 1 01
+
+myPE: 3 Time = 0.4
+mypE: 3 01
+
+myPE: 0 Time = 0.4
+mypE: 0 01
+
+myPE: 2 Time = 0.4
+mypE: 2 01
+mypE: 3 02
+mypE: 0 02
+mypE: 1 02
+mypE: 2 02
+mypE: 2 1
+mypE: 2 2
+mypE: 0 1
+mypE: 0 2
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+mypE: 1 1
+mypE: 1 2
+mypE: 1 3
+mypE: 1 4
+mypE: 1 5
+mypE: 1 6
+mypE: 2 3
+mypE: 2 4
+mypE: 2 5
+mypE: 2 6
+mypE: 3 1
+mypE: 3 2
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+
+myPE: 3 Time = 0.5
+mypE: 3 01
+
+myPE: 1 Time = 0.5
+mypE: 1 01
+
+myPE: 2 Time = 0.5
+mypE: 2 01
+
+myPE: 0 Time = 0.5
+mypE: 0 01
+mypE: 1 02
+mypE: 2 02
+mypE: 2 1
+mypE: 3 02
+mypE: 3 1
+mypE: 3 2
+mypE: 0 02
+mypE: 0 1
+mypE: 0 2
+mypE: 0 3
+mypE: 0 4
+mypE: 0 5
+mypE: 0 6
+mypE: 1 1
+mypE: 1 2
+mypE: 1 3
+mypE: 1 4
+mypE: 1 5
+mypE: 1 6
+mypE: 2 2
+mypE: 2 3
+mypE: 2 4
+mypE: 2 5
+mypE: 2 6
+mypE: 3 3
+mypE: 3 4
+mypE: 3 5
+mypE: 3 6
+
+myPE: 1 Time = 0.6
+mypE: 1 01
+
+myPE: 3 Time = 0.6
+mypE: 3 01
+
+myPE: 2 Time = 0.6
+mypE: 2 01
+
+myPE: 0 Time = 0.6
+mypE: 0 01
+mypE: 0 02
+mypE: 1 02
+mypE: 1 1
+mypE: 2 02
+mypE: 2 1
+mypE: 3 02
+mypE: 3 1
+mypE: 0 1
+mypE: 1 2
+mypE: 3 2
+mypE: 0 2
+mypE: 0 3
+mypE: 2 2
+mypE: 2 3
+mypE: 0 4
+mypE: 1 3
+mypE: 1 4
+mypE: 2 4
+mypE: 3 3
+mypE: 3 4

@@ -157,7 +157,9 @@ class mpiInfo
 
     int numToSend = ptcl_send_list.size();      int maxToSend;
 
+    printf("mypE: %d 01\n", myPE);
     MPI_Iallreduce(&numToSend, &maxToSend, 1, MPI_INT, MPI_MAX, MPI_COMM_WORLD, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 02\n", myPE);
 
     // (2) Allocate contributions to the upcoming Gather operation.  Here, "C" for "Contribution" to be Gathered
 
@@ -178,10 +180,10 @@ class mpiInfo
     {
       int id      = ptcl_send_list[ i/* TO-DO */ ];
       Cptcl_PE[i] = ptcl_send_PE  [ i/* TO-DO */ ];
-      Cptcl_x [i] = PTCL.x        [ i/* TO-DO */ ];
-      Cptcl_y [i] = PTCL.y        [ i/* TO-DO */ ];
-      Cptcl_vx[i] = PTCL.vx       [ i/* TO-DO */ ];
-      Cptcl_vy[i] = PTCL.vy       [ i/* TO-DO */ ];
+      Cptcl_x [i] = PTCL.x        [ id/* TO-DO */ ];
+      Cptcl_y [i] = PTCL.y        [ id/* TO-DO */ ];
+      Cptcl_vx[i] = PTCL.vx       [ id/* TO-DO */ ];
+      Cptcl_vy[i] = PTCL.vy       [ id/* TO-DO */ ];
     }
 
     // (5) Allocate and initialize the arrays for upcoming Gather operation to PE0.  The sizeOfGather takes
@@ -211,11 +213,17 @@ class mpiInfo
     
     MPI_Barrier(MPI_COMM_WORLD);
     
-    MPI_Iallgather( Cptcl_PE, maxToSend, MPI_INT, Gptcl_PE, sizeOfGather, MPI_INT, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( Cptcl_x, maxToSend, MPI_DOUBLE, Gptcl_x, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( Cptcl_y, maxToSend, MPI_DOUBLE, Gptcl_y, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( Cptcl_vx, maxToSend, MPI_DOUBLE, Gptcl_vx, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
-    MPI_Iallgather( Cptcl_vy, maxToSend, MPI_DOUBLE, Gptcl_vy, sizeOfGather, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 1\n", myPE);
+    MPI_Iallgather( Cptcl_PE, maxToSend, MPI_INT, Gptcl_PE, maxToSend, MPI_INT, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 2\n", myPE);
+    MPI_Iallgather( Cptcl_x, maxToSend, MPI_DOUBLE, Gptcl_x, maxToSend, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 3\n", myPE);
+    MPI_Iallgather( Cptcl_y, maxToSend, MPI_DOUBLE, Gptcl_y, maxToSend, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 4\n", myPE);
+    MPI_Iallgather( Cptcl_vx, maxToSend, MPI_DOUBLE, Gptcl_vx, maxToSend, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 5\n", myPE);
+    MPI_Iallgather( Cptcl_vy, maxToSend, MPI_DOUBLE, Gptcl_vy, maxToSend, MPI_DOUBLE, MPI_COMM_WORLD/* TO-DO */, &request);  MPI_Wait(&request,&status);  
+    printf("mypE: %d 6\n", myPE);
 
     MPI_Barrier(MPI_COMM_WORLD);
 
