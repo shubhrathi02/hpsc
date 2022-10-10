@@ -84,13 +84,13 @@ public:
     
     nRealx      = ncell_x + 1; 
     nRealy      = ncell_y + 1;
-    nReal       = nRealx*nRealy;
+    nReal       = nRealx * nRealy;
     dx          = (x1-x0) / ncell_x;
     dy          = (y1-y0) / ncell_y; 
 
     // Compute the size of the field variables, which also lie on ghost nodes
     
-    nField      = (nRealx+2)*(nRealy+2);
+    nField      = (nRealx+2) * (nRealy+2);
 
     // Allocate memory -- Note that the node numbers and field variable numbers must
     // match.  So even though we only will be caring about real nodes, their node
@@ -100,11 +100,11 @@ public:
 
     for ( int i = 1 ; i <= nRealx ; ++i )
       for ( int j = 1 ; j <= nRealy ; ++j )
-	{
-	  int p = pid(i,j);
-	  x[p] = x0 + (i-1)*dx;
-	  y[p] = y0 + (j-1)*dy;
-	}
+      {
+        int p = pid(i,j);
+        x[p] = x0 + (i-1) * dx;
+        y[p] = y0 + (j-1) * dy;
+      }
     
   }
 
@@ -139,38 +139,40 @@ public:
     // -
 
     for ( int k = 1 ; k <= PTCL.n ; ++k )
-      {
-	// First, check to be sure the particle is still in the mesh.  If it is not, set its
-	// "active" flag to zero, and note the processor to which it is going for MPI exchange.
+    {
+      // First, check to be sure the particle is still in the mesh.  If it is not, set its
+      // "active" flag to zero, and note the processor to which it is going for MPI exchange.
 	
-	if ( PTCL.active[k] == 1 )
-	  {
-	    iPEnew = myMPI.iPE;
-	    jPEnew = myMPI.jPE;
+      if ( PTCL.active[k] == 1 )
+      {
+        iPEnew = myMPI.iPE;
+        jPEnew = myMPI.jPE;
 
-	    
-	    if ( PTCL.x[k] < x0     ) { PTCL.active[k] = -1;  iPEnew = myMPI.iPE - 1 ; } 
-	    if ( PTCL.x[k] > x1     ) { /* TO-DO */ }
-	    if ( PTCL.y[k] < y0     ) { /* TO-DO */ }
-	    if ( PTCL.y[k] > y1     ) { /* TO-DO */ }
-	    
-	  }
-
-	// The particle is not in the mesh.  Collect this particle into a holding array that will 
-	// be sent to the neighboring processor.
-
-	if ( PTCL.active[k] == -1)
-	  {
-	    if ( iPEnew >= 0 && iPEnew < myMPI.nPEx )
-	    if ( jPEnew >= 0 && jPEnew < myMPI.nPEy )
-	      {
-		ptcl_send_list.push_back(k);
-		ptcl_send_PE  .push_back( /* TO-DO */);
-	      }
-
-	    PTCL.active[k] = 0;  // Remove it from the list of active particles
-	  }
+        
+        if ( PTCL.x[k] < x0     ) { PTCL.active[k] = -1;  iPEnew = myMPI.iPE - 1 ; } 
+        if ( PTCL.x[k] > x1     ) { PTCL.active[k] = -1;  iPEnew = myMPI.iPE + 1 ;/* TO-DO */ }
+        if ( PTCL.y[k] < y0     ) { PTCL.active[k] = -1;  iPEnew = myMPI.jPE - 1  ;/* TO-DO */ }
+        if ( PTCL.y[k] > y1     ) { PTCL.active[k] = -1;  iPEnew = myMPI.jPE + 1  ;/* TO-DO */ }
+        
       }
+
+      // The particle is not in the mesh.  Collect this particle into a holding array that will 
+      // be sent to the neighboring processor.
+
+      if ( PTCL.active[k] == -1)
+      {
+        if ( iPEnew >= 0 && iPEnew < myMPI.nPEx )
+        {
+          if ( jPEnew >= 0 && jPEnew < myMPI.nPEy )
+          {
+            ptcl_send_list.push_back(k);
+            ptcl_send_PE  .push_back( myMPI.myPE/* TO-DO */);
+          }
+        }
+
+        PTCL.active[k] = 0;  // Remove it from the list of active particles
+      }
+    }
 
     // -
     // |
@@ -197,13 +199,13 @@ public:
     for ( int k = 1 ; k <= PTCL.n ; ++k ) PTCL.xf[k] = PTCL.yf[k] = 0.;
 
     for ( int k = 1 ; k <= PTCL.n ; ++k )
-      {
-	if ( PTCL.active[k] == 1 )
-	  {
-	    PTCL.xf[ k ] = 0.;
-	    PTCL.yf[ k ] =-.4;
-     	  }
-       }
+    {
+	    if ( PTCL.active[k] == 1 )
+	    {
+        PTCL.xf[ k ] = 0.;
+        PTCL.yf[ k ] =-.4;
+      }
+    }
 
 
   }
