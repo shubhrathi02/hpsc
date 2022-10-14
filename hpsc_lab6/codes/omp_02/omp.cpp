@@ -56,7 +56,7 @@ int main(  int argc, char *argv[] )
 // =================================================================================== //
 // =======================         BEGIN PARALLEL REGION          ==================== //
 // =================================================================================== //
-  
+
 #pragma omp parallel shared(numTHconverged)
   {
     int myTH = omp_get_thread_num();  
@@ -101,21 +101,23 @@ int main(  int argc, char *argv[] )
     // ------------------------------------------------------------------------------------
     // (3) Initialize the linear system and form the initial guess for phi
     // ------------------------------------------------------------------------------------
-
+    int row_global;
     for ( int row = 0 ; row <  nField_TH/* TO-DO */; ++row ) 
       {
-        for ( int col = 0 ; col < bandwidth ; ++col )
+        row_global = row + Lower;
+        /*for ( int col = 0 ; col < bandwidth ; ++col )
           {
             Acoef[row][col] = 0.;
             Jcoef[row][col] = 0 ;
-          }
+          }*/
         b[row] = 0.;
+        phi[row_global] = 0.;
       }
     
-    for ( int row = Lower ; row <=  Upper/* TO-DO */  ; ++row ) 
-      {
-	      phi[row] = 0.;
-      }
+    /*for ( int row = Lower ; row <=  Upper/* TO-DO */  //; ++row ) 
+      //{
+	      //phi[row] = 0.;
+      //}*/
     
     // ------------------------------------------------------------------------------------
     // (4) Form the linear system.  Here "pt" represents "point" number in the mesh.  It is
