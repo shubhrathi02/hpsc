@@ -11,7 +11,9 @@ rm *.plt
 #--------------------------------------------------------------------------------------------------------
 
 # mpirun -n 9 ./esPIC -nPEx 3 -nPEy 3 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 100 -tEnd 2 -dt .01 -tPlot .1
- mpirun --oversubscribe -n 9 ./esPIC -nPEx 3 -nPEy 3 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 200  -tEnd 2 -dt .01 -tPlot .2
+ # mpirun --oversubscribe -n 9 ./esPIC -nPEx 3 -nPEy 3 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 200  -tEnd 2 -dt .01 -tPlot .2
+
+#mpirun --oversubscribe -n 9 ./esPIC -nPEx 2 -nPEy 2 -nCellx 2 -nCelly 2 -nPtcl 50000  -flux 50  -tEnd 2 -dt .01 -tPlot .2
 
 #--------------------------------------------------------------------------------------------------------
 # VALGRIND OPTION:
@@ -21,13 +23,17 @@ rm *.plt
 
 
 # mpirun -n 1 valgrind --tool=cachegrind ./esPIC -nPEx 1 -nPEy 1 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 200  -tEnd 2 -dt .01 -tPlot .2
+# mpirun -n 1 valgrind --tool=callgrind ./esPIC -nPEx 1 -nPEy 1 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 200  -tEnd 2 -dt .01 -tPlot .2
 
+#mpirun -n 4 valgrind --tool=callgrind ./esPIC -nPEx 2 -nPEy 2 -nCellx 2 -nCelly 2 -nPtcl 50000  -flux 50  -tEnd 2 -dt .01 -tPlot .2 > valOutput_1.txt
+#mpirun -n 4 valgrind --tool=callgrind ./esPIC -nPEx 2 -nPEy 2 -nCellx 5 -nCelly 5 -nPtcl 50000  -flux 50  -tEnd 2 -dt .01 -tPlot .2 > valOutput_2.txt
+mpirun -n 4 valgrind --tool=callgrind ./esPIC -nPEx 2 -nPEy 2 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 50  -tEnd 2 -dt .01 -tPlot .2 > valOutput_3.txt
 
 #--------------------------------------------------------------------------------------------------------
 # GNUPLOT FILES:
 #--------------------------------------------------------------------------------------------------------
 
-./writePlotCmd.py
+#./writePlotCmd.py
 
 #--------------------------------------------------------------------------------------------------------
 # DEBUG FILES:
@@ -42,4 +48,11 @@ grep 'myPE: 2' tmp > 2.sed  ; sed s/'myPE: 2'/''/g 2.sed > 2
 grep 'myPE: 3' tmp > 3.sed  ; sed s/'myPE: 3'/''/g 3.sed > 3
 
 
+#mpirun -n 4 valgrind --tool=callgrind ./esPIC -nPEx 2 -nPEy 2 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 100  -tEnd 2 -dt .01 -tPlot .2 > valOutput_4.txt
+
+#mpirun -n 4 valgrind --tool=callgrind ./esPIC -nPEx 2 -nPEy 2 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 200  -tEnd 2 -dt .01 -tPlot .2 > valOutput_5.txt
+
+#mpirun -n 1 valgrind --tool=callgrind ./esPIC -nPEx 1 -nPEy 1 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 100  -tEnd 2 -dt .01 -tPlot .2 > valOutput_6.txt
+
+#mpirun -n 9 valgrind --tool=callgrind ./esPIC -nPEx 3 -nPEy 3 -nCellx 10 -nCelly 10 -nPtcl 50000  -flux 100  -tEnd 2 -dt .01 -tPlot .2 > valOutput_7.txt
 
