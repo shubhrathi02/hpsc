@@ -1,0 +1,5 @@
+splot \
+'phi_0_0.plt' w l , 'phi_0_0.plt' w p ,\
+'phi_1_0.plt' w l , 'phi_1_0.plt' w p ,\
+'phi_2_0.plt' w l , 'phi_2_0.plt' w p ,\
+'phi_3_0.plt' w l , 'phi_3_0.plt' w p ,\
