@@ -1,0 +1,4 @@
+rm cachegrind.*
+rm callgrind.*
+rm *.log
+rm *~
