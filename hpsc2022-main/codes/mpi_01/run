@@ -1,0 +1,11 @@
+
+mpirun --oversubscribe -n 4 ./main > tty_out
+
+
+# Take the output and split it into different files, one for each PE
+
+grep  "myPE: 0" tty_out > tty_0
+grep  "myPE: 1" tty_out > tty_1
+grep  "myPE: 2" tty_out > tty_2
+grep  "myPE: 3" tty_out > tty_3
+

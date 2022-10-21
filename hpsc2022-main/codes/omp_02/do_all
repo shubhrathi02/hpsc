@@ -1,0 +1,27 @@
+
+touch phi.plt
+
+echo
+echo Speedup Study
+echo
+
+
+echo
+echo 90 cells in each direction
+echo
+
+./run 90 1
+./run 90 2
+./run 90 3
+./run 90 4
+
+echo
+echo 190 cells in each direction
+echo
+
+./run 190 1
+./run 190 2
+./run 190 3
+./run 190 4
+
+

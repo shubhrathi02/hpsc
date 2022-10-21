@@ -1,0 +1,49 @@
+
+#
+# M O D U L E S   F O R   S U M M I T
+#
+# These are the modules required for executing labs and
+# codes on Summit.  You should be able to source this file
+# because the comments are protected by "#" signs.
+#
+
+
+module purge
+
+# For compiling and running under MPI:
+
+module load intel
+module load impi
+
+# This version of Pythong is required for compatibility with ERT:
+
+module load python/3.6.5
+
+#  This "use" command is required for all of the module loads that follow:
+
+module use /projects/scru5660/public/software/module
+
+# To run our own, new version of valgrind:
+
+module load valgrind-intel
+
+# To run lstopo:
+
+module load hwloc
+
+# To run gnuplot:
+
+module load gnuplot
+
+# To run kcachegrind:
+ 
+module load kcachegrind
+
+# To run Intel Advisor
+
+module use /projects/scru5660/public/software/module
+
+ml intel_advisor
+
+
+ 
