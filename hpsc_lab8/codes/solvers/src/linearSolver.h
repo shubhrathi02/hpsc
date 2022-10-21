@@ -120,11 +120,26 @@ double Dot(VD &vec1, VD &vec2 , mpiInfo &myMPI)
 
   // Adjust those loop limits for the parallel case
 
-    --- TO-DO in LAB --- 
-    --- TO-DO in LAB --- 
+    //iMax = myMPI.nPEx - 1;  //--- TO-DO in LAB --- 
+    //jMax = myMPI.nPEy - 1;  // --- TO-DO in LAB --- 
+    // iMax = myMPI.iMax;
+    // jMax = myMPI.jMax;
+    // int iMin = myMPI.iMin;
+    // int jMin = myMPI.jMin;
 
+    if(myMPI.iPE < myMPI.nPEx -1)
+      iMax = nRealx - 1; 
+
+    if(myMPI.jPE < myMPI.nPEy -1 )
+      jMax = nRealy - 1; 
+
+
+  cout << myMPI.myPE <<" nPEX: " << myMPI.nPEx << endl;  
+    
   for ( int i = 1 ; i <= iMax ; ++i ) 
   for ( int j = 1 ; j <= jMax ; ++j ) 
+  // for ( int i = iMin ; i <= iMax ; ++i ) 
+  // for ( int j = jMin ; j <= jMax ; ++j ) 
   {
     int p = pid(i,j);
     sum += vec1[p]*vec2[p];
@@ -132,10 +147,12 @@ double Dot(VD &vec1, VD &vec2 , mpiInfo &myMPI)
 
   // Sum results across PEs and share that sum with all PEs
 
-    --- TO-DO in LAB --- 
-    --- TO-DO in LAB --- 
+    //--- TO-DO in LAB --- 
+    double dotResult = 0.;
+    MPI_Allreduce(&sum, &dotResult, 1, MPI_DOUBLE, MPI_SUM, MPI_COMM_WORLD);
+    //--- TO-DO in LAB --- 
 
-  return  TO-DO ;                                                           
+  return  dotResult;  // TO-DO                                                            
 }
 
 
@@ -165,7 +182,7 @@ void MatVecProd(VD &p , VD &prod , mpiInfo &myMPI)
 
   // Handle PE boundaries
 
-    --- TO-DO in LAB --- 
+    myMPI.PEsum(prod); //--- TO-DO in LAB --- 
 }
 
 //  ==
@@ -231,8 +248,11 @@ void CG(VD &Solution , mpiInfo & myMPI)
   
   VD b_PEsum ;
   b_PEsum.resize(nField + 1 ) ;
-    --- TO-DO in LAB --- 
-    --- TO-DO in LAB --- 
+   
+  //--- TO-DO in LAB --- 
+  rowLOOP b_PEsum[row] = b[row];
+  myMPI.PEsum(b_PEsum);
+  //--- TO-DO in LAB --- 
   
   // (3) Initialize residual, r, and r dot r for CG algorithm
 
@@ -286,7 +306,9 @@ void CG(VD &Solution , mpiInfo & myMPI)
       
       // (4.7) Check convergence across PEs, store result in "global_converged"
 
-    --- TO-DO in LAB --- 
+  MPI_Allreduce(&converged, &global_converged, 1, MPI_INT, MPI_MIN, MPI_COMM_WORLD); //  --- TO-DO in LAB --- 
+
+  
 
     }
 

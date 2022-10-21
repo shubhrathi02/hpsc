@@ -1,0 +1,7 @@
+
+omp:16737 terminated with signal 11 at PC=2b5673a20d67 SP=7ffcd121e4e0.  Backtrace:
+/lib64/libc.so.6(+0x39d67)[0x2b5673a20d67]
+/lib64/libc.so.6(atoi+0x10)[0x2b5673a1d770]
+./omp[0x402768]
+/lib64/libc.so.6(__libc_start_main+0xf5)[0x2b5673a08c05]
+./omp[0x401e89]

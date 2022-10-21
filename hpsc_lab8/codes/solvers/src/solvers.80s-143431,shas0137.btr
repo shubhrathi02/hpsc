@@ -1,0 +1,7 @@
+
+solvers:143431 terminated with signal 11 at PC=2b1520193faf SP=7ffd9fd2e798.  Backtrace:
+/lib64/libc.so.6(+0x13cfaf)[0x2b1520193faf]
+/curc/sw/gcc/5.4.0/lib64/libstdc++.so.6(_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc+0x14)[0x2b151f4f93c4]
+./solvers[0x403170]
+/lib64/libc.so.6(__libc_start_main+0xf5)[0x2b1520078c05]
+./solvers[0x4029f9]
