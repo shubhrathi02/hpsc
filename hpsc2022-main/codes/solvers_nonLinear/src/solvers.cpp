@@ -94,7 +94,10 @@ int main(int argc, char *argv[])
        cout << "Non-Linear solver       : " << nlsolver << endl;
        cout << endl;
      }
-
+   
+   timingInfo myTime("main");
+   myTime.Start(myMPI.myPE);
+   
    myMPI.GridDecomposition(nPEx,nPEy,nCellx,nCelly);
 
    // -
@@ -201,7 +204,7 @@ int main(int argc, char *argv[])
    // |
    // -
    
-   //   myTime.Finish(myMPI.myPE);
+    myTime.Finish(myMPI.myPE);
 
    MPI_Finalize();
    return 0;

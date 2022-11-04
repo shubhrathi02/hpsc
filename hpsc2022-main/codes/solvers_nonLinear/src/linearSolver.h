@@ -151,25 +151,16 @@ void MatVecProd(VDD &Matrix , VD &p , VD &prod , mpiInfo &myMPI)
 {
 
   // Serial computation on this PE
-  int numTH = 4;
-  omp_set_num_threads(numTH);
 
-  #pragma omp parallel shared(prod)
-  {
-    int thread_num = omp_get_thread_num();
-    int r_th = nField / numTH;
-    int rth_Start = thread_num * r_th + 1;
-    int rth_End = (thread_num + 1) * r_th;
-    rth_End = thread_num == (numTH - 1) ? nField : rth_End;
-    
-    for (int r = rth_Start ; r <= rth_End; ++r) {
-      prod[r] = 0.;
-      for ( int c = 1 ; c <= bandwidth ; ++c ) {
-        if ( Jcoef[r][c] > 0 )
-        prod[r] += Matrix[r][c] * p[Jcoef[r][c]];
-      }
+  rowLOOP
+    {
+      prod[row] = 0.;
+      colLOOP
+	{
+	  int Acol = Jcoef[row][col];
+	  if ( Acol > 0 ) prod[row] += Matrix[row][col] * p[ Acol ];
+	}
     }
-  }
   
   // Handle PE boundaries
 

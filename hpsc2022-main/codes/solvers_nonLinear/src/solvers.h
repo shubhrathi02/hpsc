@@ -34,6 +34,8 @@
 #include "string.h"
 #include "advisor-annotate.h"
 
+#include <algorithm>
+
 using std :: string;
 using std :: vector;
 using std :: stringstream;

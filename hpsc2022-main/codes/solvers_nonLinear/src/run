@@ -10,8 +10,9 @@ rm *.plt
 # REGULAR OPTION:
 #--------------------------------------------------------------------------------------------------------
 
- mpirun -n 4 ./solvers -nPEx 2 -nPEy 2 -nCellx 20 -nCelly 20 -solver cg -nl sa -c0 5. -tau 1. -r .8 | tee  tmp
- mpirun -n 4 ./solvers -nPEx 2 -nPEy 2 -nCellx 20 -nCelly 20 -solver cg -nl nr -c0 5. -tau 1. -r .3 | tee  tmp
+# mpirun -n 16 ./solvers -nPEx 4 -nPEy 4 -nCellx 50 -nCelly 50 -solver cg -nl sa -c0 5. -tau 1. -r .5 | tee  tmp
+# mpirun -n 9 ./solvers -nPEx 3 -nPEy 3 -nCellx 50 -nCelly 50 -solver cg -nl sa -c0 5. -tau 1. -r .8 | tee  tmp
+ mpirun -n 4 ./solvers -nPEx 2 -nPEy 2 -nCellx 20 -nCelly 20 -solver cg -nl nr -c0 5. -tau 1. -r .5 | tee  tmp
 
 #--------------------------------------------------------------------------------------------------------
 # VALGRIND OPTION:
@@ -26,10 +27,10 @@ rm *.plt
 rm -f *.sed
 rm -f 0 1 2 3
 
-grep 'myPE: 0' tmp > 0.sed  ; sed s/'myPE: 0'/''/g 0.sed > 0
-grep 'myPE: 1' tmp > 1.sed  ; sed s/'myPE: 1'/''/g 1.sed > 1
-grep 'myPE: 2' tmp > 2.sed  ; sed s/'myPE: 2'/''/g 2.sed > 2
-grep 'myPE: 3' tmp > 3.sed  ; sed s/'myPE: 3'/''/g 3.sed > 3
+#grep 'myPE: 0' tmp > 0.sed  ; sed s/'myPE: 0'/''/g 0.sed > 0
+#grep 'myPE: 1' tmp > 1.sed  ; sed s/'myPE: 1'/''/g 1.sed > 1
+#grep 'myPE: 2' tmp > 2.sed  ; sed s/'myPE: 2'/''/g 2.sed > 2
+#grep 'myPE: 3' tmp > 3.sed  ; sed s/'myPE: 3'/''/g 3.sed > 3
 
 
 
