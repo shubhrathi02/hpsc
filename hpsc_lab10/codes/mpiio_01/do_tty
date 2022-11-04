@@ -1,0 +1,7 @@
+grep "myPE: $1" tmp > tmp.$1
+
+sed s/"myPE: $1"//g tmp.$1 > $1
+
+rm tmp.$1
+
+
