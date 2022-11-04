@@ -1,0 +1,12 @@
+
+
+./clean
+
+make all
+
+mpirun -n 4 ./online
+
+./sb.py -f output.bin -x 10
+
+
+

@@ -1,0 +1,20 @@
+#
+# Remember, on Summit:
+#
+# module load intel
+# module load impi 
+
+rm -rf *.plt
+rm -rf phi_dump.bin
+
+rm pc_phi_*
+
+#--------------------------------------------------------------------------------------------------------
+# 4PE run
+#--------------------------------------------------------------------------------------------------------
+
+mpirun --oversubscribe -n 4 ./transientDiffusion -nPEx 2 -nPEy 2 -nCellx  3 -nCelly 3 -solver jacobi -tEnd .15  -dt .001 -tPlot .001 
+
+./writePlotCmd_py3.py
+
+./sb_py3.py -f phi_dump.bin -c 3 -n 2

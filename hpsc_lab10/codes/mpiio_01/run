@@ -1,0 +1,15 @@
+
+rm *.dat
+
+mpirun -n 4 ./main | tee tmp
+
+./do_tty 0
+./do_tty 1
+./do_tty 2
+./do_tty 3
+
+rm tmp
+
+
+
+
