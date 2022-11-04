@@ -151,16 +151,25 @@ void MatVecProd(VDD &Matrix , VD &p , VD &prod , mpiInfo &myMPI)
 {
 
   // Serial computation on this PE
+  int numTH = 4;
+  omp_set_num_threads(numTH);
 
-  rowLOOP
-    {
-      prod[row] = 0.;
-      colLOOP
-	{
-	  int Acol = Jcoef[row][col];
-	  if ( Acol > 0 ) prod[row] += Matrix[row][col] * p[ Acol ];
-	}
+  #pragma omp parallel shared(prod)
+  {
+    int thread_num = omp_get_thread_num();
+    int r_th = nField / numTH;
+    int rth_Start = thread_num * r_th + 1;
+    int rth_End = (thread_num + 1) * r_th;
+    rth_End = thread_num == (numTH - 1) ? nField : rth_End;
+    
+    for (int r = rth_Start ; r <= rth_End; ++r) {
+      prod[r] = 0.;
+      for ( int c = 1 ; c <= bandwidth ; ++c ) {
+        if ( Jcoef[r][c] > 0 )
+        prod[r] += Matrix[r][c] * p[Jcoef[r][c]];
+      }
     }
+  }
   
   // Handle PE boundaries
 
@@ -199,6 +208,9 @@ void Residual(VDD &Matrix , VD &residual , VD &Sol , VD &RHS, mpiInfo &myMPI)
 
 void CG(VDD &Matrix , VD &RHS , VD &Solution , mpiInfo & myMPI)
 {
+
+  ANNOTATE_SITE_BEGIN(CG);
+
 
   VD rnew; rnew.resize(nField + 1);
   VD r;       r.resize(nField + 1);
@@ -245,6 +257,8 @@ void CG(VDD &Matrix , VD &RHS , VD &Solution , mpiInfo & myMPI)
 
   while ( global_converged == 0  && ++iter <= max_iter)
     {
+      ANNOTATE_ITERATION_TASK(MatVecProd);
+      
       // (4.1) Compute alpha
 
       MatVecProd(Matrix,p,Ap,myMPI);      // A*p (stored in Ap)
@@ -257,7 +271,7 @@ void CG(VDD &Matrix , VD &RHS , VD &Solution , mpiInfo & myMPI)
       rowLOOP rnew    [row] = r[row]        - alpha * Ap[row];
 
       // (4.3) Compute beta
-
+      ANNOTATE_ITERATION_TASK(Dot);
       rnew_dot_rnew = Dot(rnew,rnew,myMPI);
       beta          = rnew_dot_rnew / r_dot_r;
       
@@ -295,6 +309,7 @@ void CG(VDD &Matrix , VD &RHS , VD &Solution , mpiInfo & myMPI)
   if ( global_converged == 1 ) if ( myMPI.myPE == 0 ) cout << "  (o) CG converged in " << iter << " iterations.\n" ;
   if ( global_converged == 0 ) if ( myMPI.myPE == 0 ) cout << "  (o) CG failed to converge after " << iter << " iterations.\n" ;
 
+  ANNOTATE_SITE_END();
 }
 
 
